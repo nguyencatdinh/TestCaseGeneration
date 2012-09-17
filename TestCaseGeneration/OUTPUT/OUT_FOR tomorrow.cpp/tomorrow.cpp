@@ -13,7 +13,7 @@ void Tomorrow(int day, int date, int month, int year)
 		if ((day == 8))
 			next_day = 2;
 		else
-			next_day = day = day + 1;
+			next_day = day + 1;
 		if (((month == 12) && (date == 31)))
 		{
 			next_date = 1;
@@ -28,29 +28,29 @@ void Tomorrow(int day, int date, int month, int year)
 				else
 				{
 					next_date = 1;
-					next_month = month = month + 1;
+					next_month = month + 1;
 				}
 			}
 			else
 				if (((date == 31) && ((((((month == 1) || (month == 3)) || (month == 5)) || (month == 7)) || (month == 8)) || (month == 10))))
 				{
 					next_date = 1;
-					next_month = month = month + 1;
+					next_month = month + 1;
 				}
 				else
 					if (((date == 29) && (month == 2)))
 					{
 						next_date = 1;
-						next_month = month = month + 1;
+						next_month = month + 1;
 					}
 					else
 						if (((date == 30) && ((((month == 4) || (month == 6)) || (month == 9)) || (month == 11))))
 						{
 							next_date = 1;
-							next_month = month = month + 1;
+							next_month = month + 1;
 						}
 						else
-							next_date = next_date + 1;
+							next_date + 1;
 	}
 	else
 	{

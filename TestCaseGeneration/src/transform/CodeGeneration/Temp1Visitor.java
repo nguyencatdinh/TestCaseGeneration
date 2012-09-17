@@ -60,7 +60,7 @@ public class Temp1Visitor extends DoNothingVisitor
         	para.add("");
         	if(listPara.get(j).getType() != "Int")
         	{
-        		hasreal = false;
+        		hasreal = true;
         	}
         }
     }
@@ -202,8 +202,8 @@ public class Temp1Visitor extends DoNothingVisitor
     public Object visitIntLiteralAST(IntLiteralAST ast, Object o) throws CompilationException
     {
     	if(hasreal == true)
-    		return ast.literal.getText();
-    	else return ast.literal.getText() + ".0";
+    		return ast.literal.getText() + ".0";
+    	else return ast.literal.getText();
     }
     
 	// BinExprAST

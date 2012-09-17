@@ -1,6 +1,6 @@
-void Tomorrow(float day, float date, float month, float year)
+void Tomorrow(int day, int date, int month, int year)
 {
-	float next_day, next_date, next_month, next_year;
+	int next_day, next_date, next_month, next_year;
 	next_day = day;
 	next_date = date;
 	next_month = month;
