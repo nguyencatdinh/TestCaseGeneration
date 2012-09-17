@@ -147,7 +147,6 @@ public class View {
 				try {
 					printConditionsList();
 				} catch (CompilationException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				btnStandard.setEnabled(false);

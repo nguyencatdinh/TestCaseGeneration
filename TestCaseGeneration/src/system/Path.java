@@ -107,7 +107,6 @@ public class Path
 	public void reIndex(ArrayList<Variable> listVar) throws CompilationException {
 		ReIndexVisitor visitor = new ReIndexVisitor(listVar);
 		for (int i = 0; i < this.path.size(); i++) {
-			//System.out.println(this.path.get(i).getClass().getName());
             this.path.get(i).visit(visitor, null);
         }
         this.listVariableReIndexed = visitor.getReIndexVar();
@@ -187,9 +186,6 @@ public class Path
 				line++;
 			}
 			String temp = (String) this.path.get(i).visit(visitor, null);
-			//if( temp == "")
-			//	value += "\n";
-			//else
 			value += temp + "\n";
 			line++;
         }

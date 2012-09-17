@@ -91,7 +91,7 @@ public class Transform
                             new FileReader(new File(this.standardSourceFile)))))));
             this.astree = parser.parse();
            
-           // Print the AST structure to text file
+            // Print the AST structure to text file
         	//Visitor walkerPrint = new AstPrinterVisitor(this.standardSourceFile);
         	//astree.visit(walkerPrint, null);
         	//System.out.println(this.standardSourceFile + ": AST internal structure");
@@ -131,7 +131,6 @@ public class Transform
            VariableVisitor varVisitor = new VariableVisitor();
            this.astree.visit(varVisitor, null); // Get list variables of the program
            this.listParameters = varVisitor.getListPara();
-           //System.out.println(this.listParameters.get(0).getName());
            this.listVariables = varVisitor.getListVar();
        	}
     	catch (NullPointerException e) {

@@ -35,10 +35,6 @@ public class CodeAnalyzer
 	//List Condition
 	private ArrayList<Condition> listCon;
 	
-	//private ArrayList<ArrayList<Integer>> testcaseSet;
-	
-	//private ArrayList<ArrayList<Integer>> slideset;
-	
 	private int currTestCase = 0;
 	
 	private String testcase = ""; 
@@ -53,9 +49,7 @@ public class CodeAnalyzer
 	
 	public CodeAnalyzer(String strSourceFile)
 	{
-		//this.testcaseSet = new ArrayList<ArrayList<Integer>>();
 		this.listCon = new ArrayList<Condition>();
-		//this.slideset = new ArrayList<ArrayList<Integer>>();
 		transform = new Transform(strSourceFile);
         this.mapTable = transform.getMapTable(); // Mapping Table
         this.pdg = transform.getPdg();
@@ -66,9 +60,7 @@ public class CodeAnalyzer
 	
 	public void loadFile(String strSourceFile)
 	{
-		//this.testcaseSet = new ArrayList<ArrayList<Integer>>();
 		this.listCon = new ArrayList<Condition>();
-		//this.slideset = new ArrayList<ArrayList<Integer>>();
 		transform = new Transform(strSourceFile);
         this.mapTable = transform.getMapTable(); // Mapping Table
         this.astree = transform.getAstree();
@@ -173,37 +165,7 @@ public class CodeAnalyzer
 		return output;
 	}
 
-	/*public ArrayList<String> getFirstTestCase() 
-	{
-		Random generator = new Random();
-		ArrayList<String> testcase = new ArrayList<String>();
-		for(int i=0; i<this.listPara.size(); i++)
-		{
-			switch(listPara.get(i).getType())
-			{
-			case "Int":
-				testcase.add(String.valueOf(generator.nextInt(100)));
-				break;
-			case "Real":
-			case "Double":
-				testcase.add(String.valueOf(generator.nextDouble()*100));
-				break;
-			}
-		}
-		ArrayList<String> temp = new ArrayList<String>();
-			
-		StringBuffer tc = new StringBuffer();
-        for (int i = 0; i < testcase.size(); i++) {
-        	temp.add(testcase.get(i));
-            tc.append(testcase.get(i));
-            tc.append("\n");
-        }
-        this.testcaseSet.add(tc.toString());
-		return testcase;
-	}*/
-
 	
-
 	private void GenNextTestCase(int i) 
 	{
 		Random r = new Random();
@@ -334,7 +296,6 @@ public class CodeAnalyzer
                         else {
                             sub = line.substring(8, line.length() - 3);
                         }
-                        // System.out.println(sub);
                         Scanner sc = new Scanner(sub);
                         sc.useDelimiter(" ");
                         z3result.add(sc.next());
@@ -405,48 +366,7 @@ public class CodeAnalyzer
         return testcase;
 	}
 
-	/*private void printSMT2(String z3FormulaFilename, Path pathCondition) throws CompilationException {
-		// Print the parameters, variables, and reindexed variables
-        try {
-            FileWriter fw = new FileWriter(z3FormulaFilename);
-            BufferedWriter out = new BufferedWriter(fw);
-            
-            // Print the parameters of program
-            for (int i = 0; i < this.listPara.size(); i++) {
-                Parameter p = this.listPara.get(i);
-                out.write("(declare-const ");
-                out.write(p.getName() + " ");
-                out.write(p.getType() + ")");
-                out.write("\n");
-            }
-            // Print variables of program
-            for (int i = 0; i < this.listVar.size(); i++) {
-                Variable v = this.listVar.get(i);
-                out.write("(declare-const ");
-                out.write(v.getName() + " ");
-                out.write(v.getType() + ")");
-                out.write("\n");
-            }
-            // Print variables after reindexing
-            for (int i = 0; i < pathCondition.getListVariableReIndexed().size(); i++) {
-                Variable v = pathCondition.getListVariableReIndexed().get(i);
-                out.write("(declare-const ");
-                out.write(v.getName() + " ");
-                out.write(v.getType() + ")");
-                out.write("\n");
-            }
-            out.close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        // Print the negated path condition in the SMT2 form
-        Z3PathPrintVisitor z3Visitor = new Z3PathPrintVisitor(z3FormulaFilename, false);
-        z3Visitor.printSMT2(pathCondition);		
-	}
-	*/
-
+	
 	public ArrayList<Integer> getSlide()
 	{
 		ArrayList<String> input = new ArrayList<String>();
@@ -625,21 +545,6 @@ public class CodeAnalyzer
 				{
 					truetc += res[count][j].toString();
 					falsetc += res[count+1][j].toString();
-					/*switch(this.listPara.get(j).getType())
-					{
-					case "Int":
-						truetc += res[count][j].toString();
-						falsetc += (int)res[count+1][j];
-						break;
-					case "Float":
-						truetc += (float)res[count][j];
-						falsetc += (float)res[count+1][j];
-						break;
-					case "Double":
-						truetc += (double)res[count][j];
-						falsetc += (double)res[count+1][j];
-						break;
-					}*/
 					if(j < numPar -1)
 					{
 						truetc += ", ";

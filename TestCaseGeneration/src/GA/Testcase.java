@@ -96,16 +96,7 @@ public class Testcase
 	
 	public void PrintResult()
 	{
-//		for (int i = 0; i < m_iBranchNum; i++)
-//		{
-//			String s = "Branch " + i + ": ";
-//			for (int j = 0; j < m_iParamNum; j++)
-//			{
-//				s += m_aiParams[i][j] + " ";
-//			}
-//			Util.PRINT(s + m_CanAcessBranch[i]);
-//		}
-				
+		
 		try
 		{
 			FileWriter fstream = new FileWriter("result.txt");
