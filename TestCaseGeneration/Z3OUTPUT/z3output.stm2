@@ -1,0 +1,6 @@
+(declare-const a Int)
+(declare-const b Int)
+(assert (not (> a b)))
+(assert (> a (+ b 3)))
+(check-sat)
+(model)
