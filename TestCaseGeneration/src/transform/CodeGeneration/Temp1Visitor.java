@@ -239,26 +239,58 @@ public class Temp1Visitor extends DoNothingVisitor
 	        String val2 = (String)ast.e2.visit(this, "c");
 	        if(val1.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+")&& val2.matches("((-|\\+)?[0-9]+(\\.[0-9]+)?)+"))
 	        {
-	        	int temp = Integer.parseInt(val1);
-	        	switch(ast.opType)
+	        	if(hasreal)
 	        	{
-			       	case BinExprAST.PLUS:
-			       		temp += Integer.parseInt(val2);
-			       		break;
-			       	case BinExprAST.MINUS:
-			       		temp -= Integer.parseInt(val2);
-			       		break;
-			       	case BinExprAST.STAR:
-			       		temp *= Integer.parseInt(val2);
-			       		break;
-			       	case BinExprAST.DIV:
-			       		temp /= Integer.parseInt(val2);
-			       		break;
-			       	case BinExprAST.MOD:
-			       		temp %= Integer.parseInt(val2);
-			       		break;
+		        	double temp = Double.parseDouble(val1);
+		        	//int temp = Integer.parseInt(val1);
+		        	switch(ast.opType)
+		        	{
+				       	case BinExprAST.PLUS:
+				       		temp += Double.parseDouble(val2);
+				       		//temp += Integer.parseInt(val2);
+				       		break;
+				       	case BinExprAST.MINUS:
+				       		temp -= Double.parseDouble(val2);
+				       		//temp -= Integer.parseInt(val2);
+				       		break;
+				       	case BinExprAST.STAR:
+				       		temp *= Double.parseDouble(val2);
+				       		//temp *= Integer.parseInt(val2);
+				       		break;
+				       	case BinExprAST.DIV:
+				       		temp /= Double.parseDouble(val2);
+				       		//temp /= Integer.parseInt(val2);
+				       		break;
+				       	case BinExprAST.MOD:
+				       		temp %= Double.parseDouble(val2);
+				       		//temp %= Integer.parseInt(val2);
+				       		break;
+		        	}
+		        	output += temp;
 	        	}
-	        	output += temp;
+	        	else
+	        	{
+	        		int temp = Integer.parseInt(val1);
+		        	switch(ast.opType)
+		        	{
+				       	case BinExprAST.PLUS:
+				       		temp += Integer.parseInt(val2);
+				       		break;
+				       	case BinExprAST.MINUS:
+				       		temp -= Integer.parseInt(val2);
+				       		break;
+				       	case BinExprAST.STAR:
+				       		temp *= Integer.parseInt(val2);
+				       		break;
+				       	case BinExprAST.DIV:
+				       		temp /= Integer.parseInt(val2);
+				       		break;
+				       	case BinExprAST.MOD:
+				       		temp %= Integer.parseInt(val2);
+				       		break;
+		        	}
+		        	output += temp;
+	        	}
 	        }
 	        else
 	        {
