@@ -185,6 +185,8 @@ public class CodeAnalyzer
 	private void GenNextTestCase(int i) 
 	{
 		Random r = new Random();
+		boolean checkTruePath = false;
+		boolean checkFalsePath = false;
 		boolean check = false;
 		for(int j=0; j < this.listCon.get(i).getTruepath().size(); j++)
 		{
@@ -194,7 +196,7 @@ public class CodeAnalyzer
 			{
 				this.listCon.get(i).setTruetc(res);
 				this.listCon.get(i).hastruetc = true;
-				check = true;
+				checkTruePath = true;
 				break;
 			}
 		}
@@ -207,10 +209,39 @@ public class CodeAnalyzer
 				
 				this.listCon.get(i).setFalsetc(res);
 				this.listCon.get(i).hasfalsetc = true;
-				check = true;
+				checkFalsePath = true;
 				break;		
 			}
 			
+		}
+		Random rand = new Random();
+		if(checkFalsePath)
+		{
+			if(!checkTruePath)
+			{
+				ArrayList<String> temp = new ArrayList<String>();
+				for(int j=0; j<this.listPara.size(); j++)
+				{
+					temp.add(String.valueOf(rand.nextInt()%100));
+				}
+				this.listCon.get(i).setTruetc(temp.toString());
+				this.listCon.get(i).hastruetc = false;
+			}
+			check = true;
+		}
+		else
+		{
+			if(checkTruePath)
+			{
+				ArrayList<String> temp = new ArrayList<String>();
+				for(int j=0; j<this.listPara.size(); j++)
+				{
+					temp.add(String.valueOf(rand.nextInt()%100));
+				}
+				this.listCon.get(i).setFalsetc(temp.toString());
+				this.listCon.get(i).hasfalsetc = false;
+				check = true;
+			}
 		}
 		this.listCon.get(i).setHastc(check);
 	}
@@ -302,7 +333,8 @@ public class CodeAnalyzer
             Process pp = run.exec(runZ3 + config + formulaFile);
             BufferedReader in = new BufferedReader(new InputStreamReader(pp.getInputStream()));
             String line = in.readLine();
-            if (line.contains("sat") && !line.contains("unsat")) {
+            if (line.contains("sat") && !line.contains("unsat")) 
+            {
                 while ((line = in.readLine()) != null) {
                     if (line.contains("define")) {
                         String sub;
@@ -390,7 +422,6 @@ public class CodeAnalyzer
 		{
 			input.add(st.nextToken());
 		}
-		System.out.println("ABC:" + input);
 		AstSimulationVisitor simulationAST = new AstSimulationVisitor(this.pdg, input);
         try {
             this.astree.visit(simulationAST, "");
