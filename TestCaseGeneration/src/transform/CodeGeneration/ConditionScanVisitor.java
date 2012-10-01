@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import system.Condition;
 import system.Parameter;
 import system.Variable;
-import system.Temp;
+import system.PathNode;
 import transform.AST.BinExprAST;
 import transform.AST.CallExprAST;
 import transform.AST.CompilationException;
@@ -383,7 +383,7 @@ public class ConditionScanVisitor extends DoNothingVisitor
 	        }
 	        else
 	        {
-	        	Temp obj = (Temp)o;
+	        	PathNode obj = (PathNode)o;
 	        	int branch = obj.branch;
 	        	if(!output.equals("(  )"))
 	        	{
@@ -441,7 +441,7 @@ public class ConditionScanVisitor extends DoNothingVisitor
     		else
     		{
     			boolean check = true;
-    			Temp obj = (Temp)o;
+    			PathNode obj = (PathNode)o;
 	        	int branch = obj.branch;
 	        	if(branch == 0)
 	        	{

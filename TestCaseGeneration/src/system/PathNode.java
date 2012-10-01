@@ -1,9 +1,10 @@
 package system;
 
-public class Temp {
+//Node in Path
 
+public class PathNode {
 	public int con;
 	public int pos;
 	public int branch;
-	public Temp(){}
+	public PathNode(){}
 }

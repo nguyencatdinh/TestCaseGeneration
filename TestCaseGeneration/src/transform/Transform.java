@@ -21,7 +21,7 @@ import transform.CodeGeneration.Visitor;
 import transform.DependenceGraph.*;
 import transform.Parser.CPPLexer;
 import transform.Parser.CPPParser;
-import system.Temp;
+import system.PathNode;
 public class Transform 
 {
 	/**
@@ -141,54 +141,63 @@ public class Transform
         }
     }
 
+    //Get standardize source's filename
 	public String getStandardSourceFile() {
 		return standardSourceFile;
 	}
 
+	//Get AST tree
 	public AST getAstree() {
 		return astree;
 	}
 
+	//Get mapping table
 	public MappingTable getMapTable() {
 		return mapTable;
 	}
 
+	//Get program dependence graph
 	public PDG getPdg() {
 		return pdg;
 	}
 	
+	//Get list path
 	public ArrayList<ArrayList<AST>> getListPath()
 	{
 		return this.listPath;
 	}
 	
+	//get list branch
 	public ArrayList<ArrayList<Integer>> getListBranch()
 	{
 		return this.listBranch;
 	}
 
+	//get list Parameter
 	public ArrayList<Parameter> getListParameters() {
 		return listParameters;
 	}
 
+	//get list variable
 	public ArrayList<Variable> getListVariables() {
 		return listVariables;
 	}
 	
+	//Scan for condition list	
 	public ArrayList<Condition> updateConList(ArrayList<Condition> conlist)
 	{
 		ConditionScanVisitor visitor = new ConditionScanVisitor(listParameters, listVariables, conlist);
-		Temp obj = new Temp();
+		PathNode node = new PathNode();
 		try
 		{
 	        for(int i=0; i< listPath.size(); i++)
 	        {
 	     	   for(int j=0; j<listPath.get(i).size(); j++)
 	     	   {
-	     		   obj.con = i;
-	     		   obj.pos = j;
-	     		   obj.branch = listBranch.get(i).get(j);
-	     		   listPath.get(i).get(j).visit(visitor, obj);
+	     		   node.con = i;
+	     		   node.pos = j;
+	     		   node.branch = listBranch.get(i).get(j);
+	     		   listPath.get(i).get(j).visit(visitor, node);
 	     	   }
 	     	   visitor.clear();
 	        }
