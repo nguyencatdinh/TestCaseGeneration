@@ -141,8 +141,8 @@ public class View {
 		btnStandard.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				String standardSource = control.standardSource(sourceFile);
-				changeSourceText(standardSource);
+				String standardizeSource = control.standardizeSource(sourceFile);
+				changeSourceText(standardizeSource);
 				printParameterList();
 				try {
 					printConditionsList();

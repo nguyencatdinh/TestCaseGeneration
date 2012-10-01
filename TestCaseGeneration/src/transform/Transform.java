@@ -15,7 +15,7 @@ import transform.CodeGeneration.Ast2GraphVisitor;
 import transform.CodeGeneration.Ast2MappingTableVisitor;
 import transform.CodeGeneration.ControlFlowGraphVisitor;
 import transform.CodeGeneration.PrettyOutputVisitor;
-import transform.CodeGeneration.Temp1Visitor;
+import transform.CodeGeneration.ConditionScanVisitor;
 import transform.CodeGeneration.VariableVisitor;
 import transform.CodeGeneration.Visitor;
 import transform.DependenceGraph.*;
@@ -43,8 +43,8 @@ public class Transform
      */
     PDG pdg;
     
-    ArrayList<ArrayList<AST>> res;
-    ArrayList<ArrayList<Integer>> res1;
+    ArrayList<ArrayList<AST>> listPath;
+    ArrayList<ArrayList<Integer>> listBranch;
     
     /**
      * this object contains all parameters of program
@@ -107,13 +107,13 @@ public class Transform
            ControlFlowGraphVisitor cfgVisitor = new ControlFlowGraphVisitor(pdg);
            astree.visit(cfgVisitor, null);
            
-           res = cfgVisitor.getListPath();
-           res1 = cfgVisitor.getListBranch();
-           for(int i=0; i<res.size(); i++)
+           listPath = cfgVisitor.getListPath();
+           listBranch = cfgVisitor.getListBranch();
+           for(int i=0; i<listPath.size(); i++)
            {
-        	   for(int j=0; j<res.get(i).size(); j++)
+        	   for(int j=0; j<listPath.get(i).size(); j++)
         	   {
-        		   System.out.println(res.get(i).get(j).getClass().toString() + " " + res1.get(i).get(j));
+        		   System.out.println(listPath.get(i).get(j).getClass().toString() + " " + listBranch.get(i).get(j));
         	   }
         	   System.out.println("Next");
            }
@@ -159,12 +159,12 @@ public class Transform
 	
 	public ArrayList<ArrayList<AST>> getListPath()
 	{
-		return this.res;
+		return this.listPath;
 	}
 	
 	public ArrayList<ArrayList<Integer>> getListBranch()
 	{
-		return this.res1;
+		return this.listBranch;
 	}
 
 	public ArrayList<Parameter> getListParameters() {
@@ -177,20 +177,20 @@ public class Transform
 	
 	public ArrayList<Condition> updateConList(ArrayList<Condition> conlist)
 	{
-		Temp1Visitor tmp1Visitor = new Temp1Visitor(listParameters, listVariables, conlist);
+		ConditionScanVisitor visitor = new ConditionScanVisitor(listParameters, listVariables, conlist);
 		Temp obj = new Temp();
 		try
 		{
-	        for(int i=0; i< res.size(); i++)
+	        for(int i=0; i< listPath.size(); i++)
 	        {
-	     	   for(int j=0; j<res.get(i).size(); j++)
+	     	   for(int j=0; j<listPath.get(i).size(); j++)
 	     	   {
 	     		   obj.con = i;
 	     		   obj.pos = j;
-	     		   obj.branch = res1.get(i).get(j);
-	     		   res.get(i).get(j).visit(tmp1Visitor, obj);
+	     		   obj.branch = listBranch.get(i).get(j);
+	     		   listPath.get(i).get(j).visit(visitor, obj);
 	     	   }
-	     	   tmp1Visitor.clear();
+	     	   visitor.clear();
 	        }
 	        
 		}
@@ -198,6 +198,6 @@ public class Transform
 		{
 			ex.printStackTrace();
 		}
-		return tmp1Visitor.getCon();
+		return visitor.getCon();
 	}
 }

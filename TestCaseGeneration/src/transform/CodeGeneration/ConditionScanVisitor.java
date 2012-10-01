@@ -23,7 +23,8 @@ import transform.AST.VarDeclAST;
 import transform.AST.VarExprAST;
 import transform.AST.VarInitializerAST;
 
-public class Temp1Visitor extends DoNothingVisitor
+
+public class ConditionScanVisitor extends DoNothingVisitor 
 {
 	boolean hasreal;
 	ArrayList<Variable> listVar;
@@ -35,7 +36,7 @@ public class Temp1Visitor extends DoNothingVisitor
     ArrayList<Integer> branch;
     String res;
     
-    public Temp1Visitor(ArrayList<Parameter> listPara, ArrayList<Variable> listVar, ArrayList<Condition> listCon)
+    public ConditionScanVisitor(ArrayList<Parameter> listPara, ArrayList<Variable> listVar, ArrayList<Condition> listCon)
     {
     	hasreal = false;
         this.listVar = listVar;
