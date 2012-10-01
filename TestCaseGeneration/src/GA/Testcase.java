@@ -24,7 +24,7 @@ public class Testcase
 	public Testcase(CodeAnalyzer codeAnalyzer)
 	{
 		m_iParamNum = codeAnalyzer.getNumPar();
-		m_iBranchNum = codeAnalyzer.getNumCon() * 2;
+		m_iBranchNum = codeAnalyzer.getNumUnsolvableCon() * 2;
 		m_aiParams = new Object[m_iBranchNum][m_iParamNum];
 		for (int i = 0; i < m_iBranchNum; i++)
 		{

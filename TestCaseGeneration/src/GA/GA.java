@@ -83,7 +83,7 @@ public class GA implements Cons
 	@SuppressWarnings("unchecked")
 	public void run(CodeAnalyzer codeAnalyzer)
 	{
-		if(codeAnalyzer.getNumCon() != 0)
+		if(codeAnalyzer.getNumUnsolvableCon() != 0)
 		{
 			GenerateRandomPopulation(codeAnalyzer);
 			

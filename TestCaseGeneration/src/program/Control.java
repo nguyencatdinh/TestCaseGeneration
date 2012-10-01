@@ -55,7 +55,7 @@ public class Control
 	{
 		m_GA.run(codeAnalyzer);
 		m_GA.reset();
-		return this.codeAnalyzer.update(m_GA.getRes());
+		return this.codeAnalyzer.updateResult(m_GA.getRes());
 		
 	}
 	

@@ -18,14 +18,19 @@ import transform.CodeGeneration.*;
 
 public class CodeAnalyzer 
 {
+	//Abstract Syntax Tree
 	private AST astree;
+	//Program Dependence Graph
 	private PDG pdg;
 	//Mapping Table
 	private MappingTable mapTable;
 	//Transform
 	private Transform transform;
 	
+	
+	//List Path
 	private ArrayList<ArrayList<AST>> listPath;
+	//List Branch
 	private ArrayList<ArrayList<Integer>> listBranch;
 	
 	//List Variable
@@ -35,14 +40,19 @@ public class CodeAnalyzer
 	//List Condition
 	private ArrayList<Condition> listCon;
 	
-	private int currTestCase = 0;
+	//Current test case position
+	private int currTestCasePos = 0;
 	
+	//Test case string
 	private String testcase = ""; 
 	
-	private int numUnsolCon;
+	//Number of unsolvable Condition
+	private int numUnsolvableCon;
 	
-	int temp1 = 1;
+	//int temp1 = 1;
 	
+	
+	//Constructor
 	public CodeAnalyzer()
 	{
 	}
@@ -58,6 +68,7 @@ public class CodeAnalyzer
         this.listVar = transform.getListVariables(); // list Variables
 	}
 	
+	//Load source file 
 	public void loadFile(String strSourceFile)
 	{
 		this.listCon = new ArrayList<Condition>();
@@ -71,6 +82,7 @@ public class CodeAnalyzer
         this.listBranch = transform.getListBranch();
 	}
 	
+	//Scan for parameters list
 	public ArrayList<String> getParaNameList()
 	{
 		ArrayList<String> listParaName = new ArrayList<String>();
@@ -81,6 +93,7 @@ public class CodeAnalyzer
 		return listParaName;
 	}
 	
+	//Scan for variables list	
 	public ArrayList<String> getVarNameList()
 	{
 		ArrayList<String> listVarName = new ArrayList<String>();
@@ -91,12 +104,14 @@ public class CodeAnalyzer
 		return listVarName;
 	}
 	
+	//Standardize source code
 	public String getStandardSource(String filename) 
 	{
 		this.loadFile(filename);
 		return transform.getStandardSourceFile();
 	}
 	
+	//Scan for conditions list
 	public ArrayList<String> getConditionList() throws CompilationException
 	{
 		ConditionPrintVisitor visitor = new ConditionPrintVisitor(null, true);
@@ -141,6 +156,7 @@ public class CodeAnalyzer
 		return listConditionExpr;
 	}
 	
+	//Generate test case for solvable conditions	
 	public String GenerateSolvable()
 	{
 		int count = 0;
@@ -165,7 +181,7 @@ public class CodeAnalyzer
 		return output;
 	}
 
-	
+	//Generate next test case
 	private void GenNextTestCase(int i) 
 	{
 		Random r = new Random();
@@ -357,7 +373,6 @@ public class CodeAnalyzer
             {
             	return null;
             }
-            // if Z3 doesn't generate all values then randomly generate value for the rest
             
         }
         catch (Exception e) {
@@ -394,28 +409,30 @@ public class CodeAnalyzer
         return result;
 	}
 
-	
-	public int getNumCon()
+	//Get number of unsolvable condition
+	public int getNumUnsolvableCon()
 	{
-		numUnsolCon = 0;
+		numUnsolvableCon = 0;
 		for(int i=0; i<this.listCon.size(); i++)
 		{
 			if(this.listCon.get(i).isHastc() == false)
-				numUnsolCon++;
+				numUnsolvableCon++;
 		}
-		return numUnsolCon;
+		return numUnsolvableCon;
 	}
 	
+	//Get number of parameter
 	public int getNumPar()
 	{
 		return this.listPara.size();
 	}
 	
+	//Check the fitness value of the testcase lists	
 	public int[] check(Object[][] testcase)
 	{
 		int numCon = this.listCon.size();
 		int numPar = this.listPara.size();
-		int[] result = new int[numUnsolCon*2];
+		int[] result = new int[numUnsolvableCon*2];
 		int count = 0;
 		
 		for(int i=0; i<numCon; i++)
@@ -437,13 +454,14 @@ public class CodeAnalyzer
 		return result;
 	}
 	
+	//Check whether test case satisfy condition
 	private int checkCon(ArrayList<String> testcase, int con, int branch)
 	{
 		System.out.println(testcase.get(0));
 		double result = 100;
 		double temp;
 		int count = 0;
-		Temp2Visitor visitor = new Temp2Visitor(this.listPara, this.listVar, testcase);
+		ConditionCheckVisitor visitor = new ConditionCheckVisitor(this.listPara, this.listVar, testcase);
 		try 
 		{
 			boolean check;
@@ -528,7 +546,9 @@ public class CodeAnalyzer
 		}
 		return (int)result;
 	}
-	public String update(Object[][] res)
+	
+	
+	public String updateResult(Object[][] res)
 	{
 		String output = "";
 		int count = 0;
@@ -579,7 +599,7 @@ public class CodeAnalyzer
 				count+=2;
 			}
 		}
-		output = "Number of unsolvable condition: " + this.numUnsolCon + "\n" + output;
+		output = "Number of unsolvable condition: " + this.numUnsolvableCon + "\n" + output;
 		return output;
 	}
 	public String showAllTestCase()
@@ -657,15 +677,15 @@ public class CodeAnalyzer
 
 	public ArrayList<Integer> getPrevTestCase() {
 		ArrayList<Integer> result = new ArrayList<Integer>();
-		if(currTestCase > 0)
-			currTestCase --;
-		if(currTestCase % 2 == 0)
+		if(currTestCasePos > 0)
+			currTestCasePos --;
+		if(currTestCasePos % 2 == 0)
 		{
-			testcase = this.listCon.get(currTestCase/2).getTruetc();
+			testcase = this.listCon.get(currTestCasePos/2).getTruetc();
 		}
 		else
 		{
-			testcase = this.listCon.get(currTestCase/2).getFalsetc();
+			testcase = this.listCon.get(currTestCasePos/2).getFalsetc();
 		}
 		StringTokenizer st= new StringTokenizer(testcase, "[, ]");
 		while(st.hasMoreTokens())
@@ -679,15 +699,15 @@ public class CodeAnalyzer
 	public ArrayList<Integer> getNextTestCase()
 	{
 		ArrayList<Integer> result = new ArrayList<Integer>();
-		if(currTestCase < this.listCon.size()*2-1)
-			currTestCase ++;
-		if(currTestCase % 2 == 0)
+		if(currTestCasePos < this.listCon.size()*2-1)
+			currTestCasePos ++;
+		if(currTestCasePos % 2 == 0)
 		{
-			testcase = this.listCon.get(currTestCase/2).getTruetc();
+			testcase = this.listCon.get(currTestCasePos/2).getTruetc();
 		}
 		else
 		{
-			testcase = this.listCon.get(currTestCase/2).getFalsetc();
+			testcase = this.listCon.get(currTestCasePos/2).getFalsetc();
 		}
 		StringTokenizer st= new StringTokenizer(testcase, "[, ]");
 		while(st.hasMoreTokens())

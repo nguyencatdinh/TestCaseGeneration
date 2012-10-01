@@ -21,7 +21,7 @@ import transform.AST.VarDeclAST;
 import transform.AST.VarExprAST;
 import transform.AST.VarInitializerAST;
 
-public class Temp2Visitor extends DoNothingVisitor
+public class ConditionCheckVisitor extends DoNothingVisitor 
 {
 	ArrayList<Variable> listVar;
     ArrayList<Parameter> listPara;
@@ -29,7 +29,7 @@ public class Temp2Visitor extends DoNothingVisitor
     ArrayList<Double> var;
     ArrayList<String> tc;
     
-    public Temp2Visitor(ArrayList<Parameter> listPara, ArrayList<Variable> listVar, ArrayList<String> testcase)
+    public ConditionCheckVisitor(ArrayList<Parameter> listPara, ArrayList<Variable> listVar, ArrayList<String> testcase)
     {
         this.listVar = listVar;
         this.listPara = listPara;
@@ -483,4 +483,5 @@ public class Temp2Visitor extends DoNothingVisitor
             return -1;
         }
 	}
+	
 }
