@@ -15,6 +15,7 @@ import transform.AST.EmptyDeclarationListAST;
 import transform.AST.EmptyExprListAST;
 import transform.AST.ExprListAST;
 import transform.AST.ExprStmtAST;
+import transform.AST.FloatLiteralAST;
 import transform.AST.IntLiteralAST;
 import transform.AST.ProgramAST;
 import transform.AST.TernaryExprAST;
@@ -205,6 +206,12 @@ public class ConditionScanVisitor extends DoNothingVisitor
     	if(hasreal == true)
     		return ast.literal.getText() + ".0";
     	else return ast.literal.getText();
+    }
+    
+    @Override
+    public Object visitFloatLiteralAST(FloatLiteralAST ast, Object o) throws CompilationException
+    {
+    	return ast.literal.getText();
     }
     
 	// BinExprAST

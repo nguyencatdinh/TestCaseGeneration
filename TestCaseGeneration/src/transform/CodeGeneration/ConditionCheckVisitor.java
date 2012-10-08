@@ -13,6 +13,7 @@ import transform.AST.EmptyDeclarationListAST;
 import transform.AST.EmptyExprListAST;
 import transform.AST.ExprListAST;
 import transform.AST.ExprStmtAST;
+import transform.AST.FloatLiteralAST;
 import transform.AST.IntLiteralAST;
 import transform.AST.ProgramAST;
 import transform.AST.TernaryExprAST;
@@ -201,6 +202,12 @@ public class ConditionCheckVisitor extends DoNothingVisitor
     public Object visitIntLiteralAST(IntLiteralAST ast, Object o) throws CompilationException
     {
     	return (double)Integer.parseInt(ast.literal.getText());
+    }
+    
+    @Override
+    public Object visitFloatLiteralAST(FloatLiteralAST ast, Object o) throws CompilationException
+    {
+    	return Double.parseDouble(ast.literal.getText());
     }
     
 	// BinExprAST

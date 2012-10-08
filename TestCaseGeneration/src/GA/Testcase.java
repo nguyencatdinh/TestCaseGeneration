@@ -89,7 +89,11 @@ public class Testcase
 	public void Mutate(CodeAnalyzer codeAnalyzer, int pos)
 	{
 		Random r = new Random();
-		int pos1 = Math.abs(r.nextInt()%(m_iParamNum-1));
+		int pos1 = 0;
+		if(m_iParamNum - 1 > 0)
+		{
+			pos1 = Math.abs(r.nextInt()%(m_iParamNum-1));
+		}
 		this.m_aiParams[pos][pos1] = r.nextInt()%10;
 		this.m_CanAcessBranch = codeAnalyzer.check(m_aiParams);
 	}
