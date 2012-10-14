@@ -196,6 +196,7 @@ public class CodeAnalyzer
 			{
 				this.listCon.get(i).setTruetc(res);
 				this.listCon.get(i).hastruetc = true;
+				this.listCon.get(i).solutionPosTrue = pos;
 				checkTruePath = true;
 				break;
 			}
@@ -209,6 +210,7 @@ public class CodeAnalyzer
 				
 				this.listCon.get(i).setFalsetc(res);
 				this.listCon.get(i).hasfalsetc = true;
+				this.listCon.get(i).solutionPosFalse = pos;
 				checkFalsePath = true;
 				break;		
 			}
@@ -226,6 +228,8 @@ public class CodeAnalyzer
 				}
 				this.listCon.get(i).setTruetc(temp.toString());
 				this.listCon.get(i).hastruetc = false;
+				this.listCon.get(i).solutionPosTrue = -1;
+
 			}
 			check = true;
 		}
@@ -240,6 +244,7 @@ public class CodeAnalyzer
 				}
 				this.listCon.get(i).setFalsetc(temp.toString());
 				this.listCon.get(i).hasfalsetc = false;
+				this.listCon.get(i).solutionPosFalse = -1;
 				check = true;
 			}
 		}
@@ -417,6 +422,11 @@ public class CodeAnalyzer
 	public ArrayList<Integer> getSlide()
 	{
 		ArrayList<String> input = new ArrayList<String>();
+		String testcase;
+		if(currTestCasePos % 2 == 0)
+			testcase = this.listCon.get(currTestCasePos/2).getTruetc();
+		else
+			testcase = this.listCon.get(currTestCasePos/2).getFalsetc();
 		StringTokenizer st= new StringTokenizer(testcase, "[, ]");
 		while(st.hasMoreTokens())
 		{
@@ -433,10 +443,28 @@ public class CodeAnalyzer
         ExecutionHistory eh = simulationAST.getExecutionHistory();
         eh.changeLineIdAtExecNodePointToNode(this.pdg);
         ArrayList<Integer> result = new ArrayList<Integer>();
+        result.add(0);
         for(int i=0; i<eh.size(); i++)
         {
         	result.add(eh.get(i).getNode().getID());
         }
+		/*int pos;
+		
+		if (pos >= 0)
+		{
+			ArrayList<AST> path = this.listPath.get(pos);
+			for(int i=0; i<path.size(); i++)
+			{
+				result.add(path.get(i).line);
+			}
+		}
+		else
+			result = null;
+		*/System.out.println("Slide " + currTestCasePos);
+		for(int i =0; i<result.size(); i++)
+		{
+			System.out.println(result.get(i));
+		}
         return result;
 	}
 
@@ -459,7 +487,7 @@ public class CodeAnalyzer
 	}
 	
 	//Check the fitness value of the testcase lists	
-	public int[] check(Object[][] testcase)
+	public int[] check(Object[][] testcase, Integer[] res)
 	{
 		int numCon = this.listCon.size();
 		int numPar = this.listPara.size();
@@ -477,8 +505,8 @@ public class CodeAnalyzer
 					temp.add(testcase[count][j].toString());
 					temp1.add(testcase[count+1][j].toString());
 				}
-				result[count] = checkCon(temp, i , 0);
-				result[count+1] = checkCon(temp1, i , 1);
+				result[count] = checkCon(temp, i , 0, res[count]);
+				result[count+1] = checkCon(temp1, i , 1, res[count+1]);
 				count += 2;
 			}
 		}
@@ -486,7 +514,7 @@ public class CodeAnalyzer
 	}
 	
 	//Check whether test case satisfy condition
-	private int checkCon(ArrayList<String> testcase, int con, int branch)
+	private int checkCon(ArrayList<String> testcase, int con, int branch, Integer resPos)
 	{
 		System.out.println(testcase.get(0));
 		double result = 100;
@@ -525,8 +553,11 @@ public class CodeAnalyzer
 						temp = temp/count+1;
 					else
 						temp = 0;
-					if(temp<result)
+					if(temp < result)
+					{
 						result = temp;
+						resPos = i;
+					}
 					visitor.clear();
 				}
 			}
@@ -560,7 +591,10 @@ public class CodeAnalyzer
 					else
 						temp = 0;
 					if(temp<result)
+					{
 						result = temp;
+						resPos = i;
+					}
 					visitor.clear();
 				}
 			}
@@ -609,20 +643,23 @@ public class CodeAnalyzer
 				if((Integer)res[count][j] == 0)
 				{
 					this.listCon.get(i).hastruetc = true;
+					this.listCon.get(i).solutionPosTrue = (Integer)res[count][j+1];
 				}
 				else
 				{
 					this.listCon.get(i).hastruetc = false;
+					this.listCon.get(i).solutionPosTrue = -1;
 				}
 				
 				if((Integer)res[count+1][j] == 0)
 				{
 					this.listCon.get(i).hasfalsetc = true;
+					this.listCon.get(i).solutionPosFalse = (Integer)res[count+1][j+1];
 				}
 				else
 				{
 					this.listCon.get(i).hasfalsetc = false;
-				}
+					this.listCon.get(i).solutionPosFalse = -1;				}
 				
 				output += "Condition: " + this.listCon.get(i).getCondition() + "\n";
 				output += "\tTrue: " + this.listCon.get(i).getTruetc() + "\t" + this.listCon.get(i).hastruetc + "\n";

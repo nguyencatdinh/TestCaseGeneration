@@ -73,23 +73,23 @@ public class View {
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(940, 750);
+		shell.setSize(1299, 1001);
 		shell.setText("Test Case Generation");
 		txtLog = new StyledText(shell, SWT.BORDER|SWT.H_SCROLL|SWT.V_SCROLL);
 		txtLog.setEditable(false);
-		txtLog.setBounds(10, 423, 912, 284);
+		txtLog.setBounds(10, 657, 1125, 296);
 		Font font = new Font(Display.getCurrent(), "Courier New", 12, SWT.NONE);
         txtLog.setFont(font);
         
         styledText = new StyledText(shell, SWT.BORDER|SWT.H_SCROLL|SWT.V_SCROLL);
         styledText.setEditable(false);
-        styledText.setBounds(10, 10, 580, 407);
+        styledText.setBounds(10, 10, 581, 601);
         styledText.setFont(font);
 
         table1 = new Table(shell, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		font = new  Font(Display.getCurrent(), "Courier New", 10, SWT.NONE);
 		table1.setFont(font);
-		table1.setBounds(600, 10, 160, 197);
+		table1.setBounds(597, 10, 247, 197);
 		table1.setHeaderVisible(true);
 		table1.setLinesVisible(true);
 		
@@ -103,7 +103,7 @@ public class View {
 		
 		table2 = new Table(shell, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		table2.setFont(font);
-		table2.setBounds(602, 213, 320, 204);
+		table2.setBounds(597, 223, 538, 388);
 		table2.setHeaderVisible(true);
 		table2.setLinesVisible(true);
 		
@@ -134,7 +134,7 @@ public class View {
 		        }
 			}
 		});
-		btnOpen.setBounds(800, 10, 100, 20);
+		btnOpen.setBounds(854, 9, 100, 20);
 		btnOpen.setText("Open Source");
 		
 		btnStandard = new Button(shell, SWT.NONE);
@@ -153,7 +153,7 @@ public class View {
 				btnScan.setEnabled(true);
 			}
 		});
-		btnStandard.setBounds(800, 35, 100, 20);
+		btnStandard.setBounds(854, 34, 100, 20);
 		btnStandard.setText("Standard Source");
 		btnStandard.setEnabled(false);
 		
@@ -168,7 +168,7 @@ public class View {
 		});
 		btnScan.setText("Scan Condition");
 		btnScan.setEnabled(false);
-		btnScan.setBounds(800, 60, 100, 20);
+		btnScan.setBounds(854, 59, 100, 20);
 		
 		btnFirst = new Button(shell, SWT.NONE);
 		btnFirst.addSelectionListener(new SelectionAdapter() {
@@ -181,7 +181,7 @@ public class View {
 
 		});
 		btnFirst.setText("Generate Solvable");
-		btnFirst.setBounds(800, 85, 100, 20);
+		btnFirst.setBounds(854, 84, 100, 20);
 		btnFirst.setEnabled(false);
 		
 		btnGen = new Button(shell, SWT.NONE);
@@ -190,14 +190,14 @@ public class View {
 			public void widgetSelected(SelectionEvent arg0) {
 				
 				//control.GenerateSolvable();
-				txtLog.setText(control.RunGA());
+				txtLog.setText(control.GenerateUnsolvable());
 				btnGen.setEnabled(false);
 				btnShow.setEnabled(true);
 			}
 
 		});
 		btnGen.setText("Generate Unsolvable");
-		btnGen.setBounds(800, 110, 100, 20);
+		btnGen.setBounds(854, 109, 100, 20);
 		btnGen.setEnabled(false);
 		
 		btnShow = new Button(shell, SWT.NONE);
@@ -211,7 +211,7 @@ public class View {
 		});
 		btnShow.setText("Show All TC");
 		btnShow.setEnabled(false);
-		btnShow.setBounds(800, 135, 100, 20);
+		btnShow.setBounds(854, 135, 100, 20);
 		
 		btnExit = new Button(shell, SWT.NONE);
 		btnExit.addSelectionListener(new SelectionAdapter() {
@@ -221,7 +221,7 @@ public class View {
 			}
 		});
 		btnExit.setText("Exit");
-		btnExit.setBounds(800, 187, 100, 20);
+		btnExit.setBounds(854, 187, 100, 20);
 		btnExit.setEnabled(true);
 		
 		btnPrev = new Button(shell, SWT.NONE);
@@ -229,12 +229,12 @@ public class View {
 			public void widgetSelected(SelectionEvent arg0) {
 				ArrayList<Integer> testcase = control.getPrevTestCase();
 				UpdateTestCase(testcase);
-				//UpdateSlide();
+				UpdateSlide();
 			}
 		});
 		btnPrev.setText("Prev");
 		btnPrev.setEnabled(true);
-		btnPrev.setBounds(800, 161, 50, 20);
+		btnPrev.setBounds(850, 161, 50, 20);
 		
 		btnNext = new Button(shell, SWT.NONE);
 		btnNext.addSelectionListener(new SelectionAdapter() {
@@ -242,12 +242,16 @@ public class View {
 			public void widgetSelected(SelectionEvent arg0) {
 				ArrayList<Integer> testcase = control.getNextTestCase();
 				UpdateTestCase(testcase);
-				//UpdateSlide();
+				UpdateSlide();
 			}
 		});
 		btnNext.setText("Next");
 		btnNext.setEnabled(true);
-		btnNext.setBounds(850, 161, 50, 20);
+		btnNext.setBounds(904, 161, 50, 20);
+		
+		Label lblLog = new Label(shell, SWT.NONE);
+		lblLog.setBounds(10, 627, 55, 15);
+		lblLog.setText("Log");
 	}
 	
 
@@ -316,15 +320,15 @@ public class View {
 			int size = slide.size();
 			StyleRange[] ranges = new StyleRange[size];
             for (int i = 0; i < size; i++) {
-                int line = slide.get(i) - 1 ;
+                int line = slide.get(i);
                 // find the offset of the beginning of the line
-                int offsetLine = this.styledText.getOffsetAtLine(line);
+                int offsetLine = this.styledText.getOffsetAtLine(line -1);
                 while (this.styledText.getTextRange(offsetLine, 1).equals("\t")
                         || this.styledText.getTextRange(offsetLine, 1).equals(" ")) {
                     offsetLine++;
                 }
                 // the lenght of text need to be highlight
-                int length = this.styledText.getOffsetAtLine(line + 1) - offsetLine;
+                int length = this.styledText.getOffsetAtLine(line) - offsetLine;
                 
                 // create new StyleRange
                 

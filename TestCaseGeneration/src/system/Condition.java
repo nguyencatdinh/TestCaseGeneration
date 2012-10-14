@@ -14,6 +14,8 @@ public class Condition
 	ArrayList<String> falsepath;
 	ArrayList<Integer> truecon;
 	ArrayList<Integer> falsecon;
+	public int solutionPosTrue;
+	public int solutionPosFalse;
 	String truetc;
 	public boolean hastruetc;
 	String falsetc;
@@ -23,6 +25,8 @@ public class Condition
 	{
 		stmtID = 0;
 		ast = null;
+		solutionPosTrue = -1;
+		solutionPosFalse = -1;
 		truepath = new ArrayList<String>();
 		falsepath = new ArrayList<String>();
 		truecon = new ArrayList<Integer>();

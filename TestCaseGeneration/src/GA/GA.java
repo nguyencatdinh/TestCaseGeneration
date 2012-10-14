@@ -37,29 +37,6 @@ public class GA implements Cons
 	{
 		if (m_AllTimeBestTestcase.isAcesssAllBranch()) 
 		{
-			for(int i=0; i<m_AllTimeBestTestcase.m_iBranchNum; i+=2)
-			{
-				System.out.println(m_AllTimeBestTestcase.m_CanAcessBranch[i]);
-				System.out.println(m_AllTimeBestTestcase.m_CanAcessBranch[i+1]);
-				int j;
-				String truetc = "[";
-				String falsetc = "[";
-				for(j=0; j< m_AllTimeBestTestcase.m_iParamNum ; j++)
-				{
-					truetc += m_AllTimeBestTestcase.m_aiParams[i][j];
-					falsetc += m_AllTimeBestTestcase.m_aiParams[i+1][j];
-					if(j < m_AllTimeBestTestcase.m_iParamNum -1)
-					{
-						truetc += ", ";
-						falsetc += ", ";
-					}
-				}
-				truetc += "]";
-				falsetc += "]";
-				System.out.println(truetc);
-				System.out.println(falsetc);
-			}
-			
 			return true;
 		}
 		return false;
@@ -107,7 +84,7 @@ public class GA implements Cons
 					{
 //						Random r = new Random();
 						Testcase child = bestTestCase.Clone();
-						int res = child.Hybid(t);
+						int res = child.CrossOver(t);
 						if(res != 0)
 						{
 							child.Mutate(codeAnalyzer, res);
@@ -130,7 +107,7 @@ public class GA implements Cons
 	{
 		if(m_AllTimeBestTestcase != null)
 		{
-			Object[][] res = new Object[m_AllTimeBestTestcase.m_iBranchNum][m_AllTimeBestTestcase.m_iParamNum+1];
+			Object[][] res = new Object[m_AllTimeBestTestcase.m_iBranchNum][m_AllTimeBestTestcase.m_iParamNum+2];
 			for (int i = 0; i < m_AllTimeBestTestcase.m_iBranchNum; i ++)
 			{
 				int j;
@@ -146,6 +123,7 @@ public class GA implements Cons
 				{
 					res[i][j] = 1;
 				}
+				res[i][j+1] = m_AllTimeBestTestcase.m_Pos[i];
 			}
 			return res;
 		}

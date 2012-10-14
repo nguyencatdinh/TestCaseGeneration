@@ -67,7 +67,7 @@ public class Control
 	}
 
 	//Run generic algorithm to get test case for unsolvable condition
-	public String RunGA()
+	public String GenerateUnsolvable()
 	{
 		m_GA.run(codeAnalyzer);
 		m_GA.reset();

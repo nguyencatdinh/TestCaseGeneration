@@ -12,6 +12,8 @@ public class Testcase
 	
 	public int[] m_CanAcessBranch;
 	
+	public Integer[] m_Pos;
+	
 	public int m_iParamNum;
 	
 	public int m_iBranchNum;
@@ -26,11 +28,13 @@ public class Testcase
 		m_iParamNum = codeAnalyzer.getNumPar();
 		m_iBranchNum = codeAnalyzer.getNumUnsolvableCon() * 2;
 		m_aiParams = new Object[m_iBranchNum][m_iParamNum];
+		m_Pos = new Integer[m_iBranchNum];
 		for (int i = 0; i < m_iBranchNum; i++)
 		{
 			m_aiParams[i] = (Object[])Util.Random(codeAnalyzer);
+			m_Pos[i] = -1;
 		}
-		m_CanAcessBranch = codeAnalyzer.check(m_aiParams);
+		m_CanAcessBranch = codeAnalyzer.check(m_aiParams, m_Pos);
 			
 	}
 	
@@ -68,7 +72,7 @@ public class Testcase
 		return newTestcase;
 	}
 	
-	public int Hybid(Testcase t)
+	public int CrossOver(Testcase t)
 	{
 		int count = 0;
 		for (int i = 0; i < m_iBranchNum; i++)
@@ -77,6 +81,7 @@ public class Testcase
 			{
 				System.arraycopy(t.m_aiParams[i], 0, this.m_aiParams[i], 0, m_iParamNum);
 				this.m_CanAcessBranch[i] = t.m_CanAcessBranch[i];
+				this.m_Pos[i] = t.m_Pos[i];
 			}
 			else if(this.m_CanAcessBranch[i] != 0)
 			{
@@ -95,7 +100,7 @@ public class Testcase
 			pos1 = Math.abs(r.nextInt()%(m_iParamNum-1));
 		}
 		this.m_aiParams[pos][pos1] = r.nextInt()%10;
-		this.m_CanAcessBranch = codeAnalyzer.check(m_aiParams);
+		this.m_CanAcessBranch = codeAnalyzer.check(m_aiParams, m_Pos);
 	}
 	
 	public void PrintResult()
