@@ -48,6 +48,7 @@ public class View {
 	private Button btnViewAst;
 	
 	private Font font;
+	private Condition window;
 	
 
 	/**
@@ -307,6 +308,13 @@ public class View {
 		lblLogs.setBounds(615, 614, 87, 26);
 		
 		btnViewDetail = new Button(shell, SWT.NONE);
+		btnViewDetail.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				window = new Condition();
+				window.open(control);
+			}
+		});
 		btnViewDetail.setText("View Con Detail");
 		btnViewDetail.setEnabled(false);
 		btnViewDetail.setBounds(616, 212, 142, 36);

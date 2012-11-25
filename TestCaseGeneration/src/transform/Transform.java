@@ -13,6 +13,7 @@ import transform.AST.*;
 import transform.CodeGeneration.Ast2GraphVisitor;
 import transform.CodeGeneration.Ast2MappingTableVisitor;
 import transform.CodeGeneration.AstPrinterVisitor;
+import transform.CodeGeneration.ConditionScanNormalVisitor;
 import transform.CodeGeneration.ControlFlowGraphVisitor;
 import transform.CodeGeneration.PrettyOutputVisitor;
 import transform.CodeGeneration.ConditionScanVisitor;
@@ -194,6 +195,7 @@ public class Transform
 	public ArrayList<Condition> updateConList(ArrayList<Condition> conlist)
 	{
 		ConditionScanVisitor visitor = new ConditionScanVisitor(listParameters, listVariables, conlist);
+		ConditionScanNormalVisitor visitor1 = new ConditionScanNormalVisitor(listParameters, listVariables, conlist);
 		PathNode node = new PathNode();
 		try
 		{
@@ -205,6 +207,7 @@ public class Transform
 	     		   node.pos = j;
 	     		   node.branch = listBranch.get(i).get(j);
 	     		   listPath.get(i).get(j).visit(visitor, node);
+	     		   listPath.get(i).get(j).visit(visitor1, node);
 	     	   }
 	     	   visitor.clear();
 	        }
