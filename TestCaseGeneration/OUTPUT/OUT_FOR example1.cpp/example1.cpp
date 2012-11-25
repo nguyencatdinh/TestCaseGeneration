@@ -1,102 +1,11 @@
-Program(
-	FuncDecl(
-		f
-		ParaList(
-			Para(
-				a
-				TypeList(
-					Int
-					EmptyTypeList()
-				)
-			)
-			ParaList(
-				Para(
-					b
-					TypeList(
-						Int
-						EmptyTypeList()
-					)
-				)
-				EmptyParaList()
-			)
-		)
-		TypeList(
-			Int
-			EmptyTypeList()
-		)
-		CompStmt(
-			StmtList(
-				WhileStmt(
-					BinExpr(
-						VarExpr(
-							b
-						)
-						!=
-						IntLiteral(
-							0
-						)
-					)
-					CompStmt(
-						StmtList(
-							IfThenElseStmt(
-								BinExpr(
-									VarExpr(
-										a
-									)
-									>
-									VarExpr(
-										b
-									)
-								)
-								ExprStmt(
-									BinExpr(
-										VarExpr(
-											a
-										)
-										=
-										BinExpr(
-											VarExpr(
-												a
-											)
-											-
-											VarExpr(
-												b
-											)
-										)
-									)
-								)
-								ExprStmt(
-									BinExpr(
-										VarExpr(
-											b
-										)
-										=
-										BinExpr(
-											VarExpr(
-												b
-											)
-											-
-											VarExpr(
-												a
-											)
-										)
-									)
-								)
-							)
-							EmptyStmtList()
-						)
-					)
-				)
-				StmtList(
-					RetStmt(
-						VarExpr(
-							a
-						)
-					)
-					EmptyStmtList()
-				)
-			)
-		)
-	)
-	EmptyDeclarationList()
-)
+int f(int a, int b)
+{
+	while ((b != 0))
+	{
+		if ((a > b))
+			a = a - b;
+		else
+			b = b - a;
+	}
+	return a;
+}

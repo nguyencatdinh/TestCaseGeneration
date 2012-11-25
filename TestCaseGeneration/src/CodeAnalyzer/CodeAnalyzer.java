@@ -111,6 +111,11 @@ public class CodeAnalyzer
 		return transform.getStandardSourceFile();
 	}
 	
+
+	public String getASTTreeFile(String sourceFile) {
+		return transform.getASTTreeFile();
+	}
+	
 	//Scan for conditions list
 	public ArrayList<String> getConditionList() throws CompilationException
 	{
@@ -743,8 +748,8 @@ public class CodeAnalyzer
 		return result;
 	}
 
-	public ArrayList<Integer> getPrevTestCase() {
-		ArrayList<Integer> result = new ArrayList<Integer>();
+	public ArrayList<Object> getPrevTestCase() {
+		ArrayList<Object> result = new ArrayList<Object>();
 		if(currTestCasePos > 0)
 			currTestCasePos --;
 		if(currTestCasePos % 2 == 0)
@@ -756,17 +761,46 @@ public class CodeAnalyzer
 			testcase = this.listCon.get(currTestCasePos/2).getFalsetc();
 		}
 		StringTokenizer st= new StringTokenizer(testcase, "[, ]");
+		int i = 0;
 		while(st.hasMoreTokens())
 		{
-			int temp = Integer.parseInt(st.nextToken());
-			result.add(temp);
+			switch(this.getParaList().get(i).getType())
+			{
+			case "Int":
+				String res = st.nextToken();
+				try {
+					result.add(Integer.parseInt(res));
+				}
+				catch(NumberFormatException ex) {
+					StringTokenizer st1 = new StringTokenizer(res, "/");
+					Double temp1 = Double.parseDouble(st1.nextToken());
+					Double temp2 = Double.parseDouble(st1.nextToken());
+					result.add((temp1/temp2));
+				}
+				break;
+			case "Real":
+			case "Float":
+			case "Double":
+				String res1 = st.nextToken();
+				try {
+					result.add(Double.parseDouble(res1));
+				}
+				catch(NumberFormatException ex) {
+					StringTokenizer st1 = new StringTokenizer(res1, "/");
+					Double temp1 = Double.parseDouble(st1.nextToken());
+					Double temp2 = Double.parseDouble(st1.nextToken());
+					result.add((temp1/temp2));
+				}
+				break;
+			}
+			i++;
 		}
 		return result;
 	}
 	
-	public ArrayList<Integer> getNextTestCase()
+	public ArrayList<Object> getNextTestCase()
 	{
-		ArrayList<Integer> result = new ArrayList<Integer>();
+		ArrayList<Object> result = new ArrayList<Object>();
 		if(currTestCasePos < this.listCon.size()*2-1)
 			currTestCasePos ++;
 		if(currTestCasePos % 2 == 0)
@@ -778,9 +812,38 @@ public class CodeAnalyzer
 			testcase = this.listCon.get(currTestCasePos/2).getFalsetc();
 		}
 		StringTokenizer st= new StringTokenizer(testcase, "[, ]");
+		int i = 0;
 		while(st.hasMoreTokens())
 		{
-			result.add(Integer.parseInt(st.nextToken()));
+			switch(this.getParaList().get(i).getType()){
+			case "Int":
+				String res = st.nextToken();
+				try {
+					result.add(Integer.parseInt(res));
+				}
+				catch(NumberFormatException ex) {
+					StringTokenizer st1 = new StringTokenizer(res, "/");
+					Double temp1 = Double.parseDouble(st1.nextToken());
+					Double temp2 = Double.parseDouble(st1.nextToken());
+					result.add((temp1/temp2));
+				}
+				break;
+			case "Real":
+			case "Float":
+			case "Double":
+				String res1 = st.nextToken();
+				try {
+					result.add(Double.parseDouble(res1));
+				}
+				catch(NumberFormatException ex) {
+					StringTokenizer st1 = new StringTokenizer(res1, "/");
+					Double temp1 = Double.parseDouble(st1.nextToken());
+					Double temp2 = Double.parseDouble(st1.nextToken());
+					result.add((temp1/temp2));
+				}
+				break;
+			}
+			i++;
 		}
 		return result;
 	}
@@ -789,4 +852,5 @@ public class CodeAnalyzer
 	{
 		return this.listPara;
 	}
+
 }

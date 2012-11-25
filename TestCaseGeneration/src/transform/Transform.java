@@ -29,7 +29,7 @@ public class Transform
      */
 	String originalSourceFile;
     String standardSourceFile;
-    
+    String astTreeFile;
     /**
      * Abstract Syntax Tree
      */
@@ -84,16 +84,18 @@ public class Transform
             }
             
             //Standardize source
+             
             Visitor walkerC = new PrettyOutputVisitor(this.standardSourceFile, false);
             this.astree.visit(walkerC, "no_output_line");
             
             parser = new CPPParser(new CommonTokenStream(new CPPLexer(new ANTLRReaderStream(new BufferedReader(
                             new FileReader(new File(this.standardSourceFile)))))));
             this.astree = parser.parse();
-           
+            
             //Print the AST structure to text file
-        	//Visitor walkerPrint = new AstPrinterVisitor(this.standardSourceFile);
-            //astree.visit(walkerPrint, null);
+            this.astTreeFile = outFolder.getAbsolutePath()+File.separatorChar+ "AST_" + filename;
+            Visitor walkerPrint = new AstPrinterVisitor(this.astTreeFile);
+            astree.visit(walkerPrint, null);
         	//System.out.println(this.standardSourceFile + ": AST internal structure");
         		
            /**
@@ -144,6 +146,11 @@ public class Transform
     //Get standardize source's filename
 	public String getStandardSourceFile() {
 		return standardSourceFile;
+	}
+	
+	//Get AST tree filename
+	public String getASTTreeFile() {
+		return astTreeFile;
 	}
 
 	//Get AST tree

@@ -19,6 +19,11 @@ public class Control
 	//Original source
 	private String originalSource;
 	
+	//AST tree file
+	private String astTreeFile;
+	//AST tree content
+	private String astTreeContent;
+	
 	//Code analyzer
 	private CodeAnalyzer codeAnalyzer;
 	
@@ -47,6 +52,12 @@ public class Control
 		standardFile = codeAnalyzer.getStandardSource(filename);
 		standardSource = io.readFile(standardFile);
 		return standardSource;
+	}
+	
+	public String astTree(String sourceFile) {
+		astTreeFile = codeAnalyzer.getASTTreeFile(sourceFile);
+		astTreeContent = io.readFile(astTreeFile);
+		return astTreeContent;
 	}
 	
 	//Get parameter list
@@ -105,13 +116,14 @@ public class Control
 	}
 
 	//Get the previous test case
-	public ArrayList<Integer> getPrevTestCase() {
+	public ArrayList<Object> getPrevTestCase() {
 		return codeAnalyzer.getPrevTestCase();
 	}
 	
 	//Get the next test case
-	public ArrayList<Integer> getNextTestCase()
+	public ArrayList<Object> getNextTestCase()
 	{
 		return codeAnalyzer.getNextTestCase();
 	}
+
 }
