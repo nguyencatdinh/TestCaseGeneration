@@ -11,9 +11,7 @@ public class Condition
 	AST ast;
 	String condition;
 	ArrayList<String> truepath;
-	ArrayList<String> truepath_normal;
 	ArrayList<String> falsepath;
-	ArrayList<String> falsepath_normal;
 	ArrayList<Integer> truecon;
 	ArrayList<Integer> falsecon;
 	public int solutionPosTrue;
@@ -30,9 +28,7 @@ public class Condition
 		solutionPosTrue = -1;
 		solutionPosFalse = -1;
 		truepath = new ArrayList<String>();
-		truepath_normal = new ArrayList<String>();
 		falsepath = new ArrayList<String>();
-		falsepath_normal = new ArrayList<String>();
 		truecon = new ArrayList<Integer>();
 		falsecon = new ArrayList<Integer>();
 		truetc = "";

@@ -1,6 +1,6 @@
 (declare-const X Int)
 (declare-const Y Int)
-(assert (not (and (and (> X Y) (> X 0)) (> Y 0))))
-(assert (not (and (and (< X Y) (> X 0)) (> Y 0))))
+(assert (not (or (<= X 0) (<= Y 0))))
+(assert (not (> X Y)))
 (check-sat)
 (model)
