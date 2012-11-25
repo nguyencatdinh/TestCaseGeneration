@@ -30,9 +30,29 @@ public class Util implements Cons
 				a[i] = r.nextInt()%100;
 				break;
 			case "Real":
-				a[i] = r.nextDouble()*100;
+			case "Float":
+			case "Double":
+				a[i] = r.nextDouble()*10;
 				break;
 			}
+		}
+		return a;
+	}
+	
+	public static Object Random(CodeAnalyzer codeAnalyzer, int pos)
+	{
+		Object a = new Object();
+		ArrayList<Parameter> listPar = codeAnalyzer.getParaList();
+		switch(listPar.get(pos).getType())
+		{
+		case "Int":
+			a = r.nextInt()%100;
+			break;
+		case "Real":
+		case "Float":
+		case "Double":
+			a = r.nextDouble()*10;
+			break;		
 		}
 		return a;
 	}

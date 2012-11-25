@@ -20,7 +20,6 @@ public class Testcase
 	
 	public Testcase()
 	{
-		
 	}
 	
 	public Testcase(CodeAnalyzer codeAnalyzer)
@@ -65,7 +64,8 @@ public class Testcase
 		
 		newTestcase.m_CanAcessBranch = new int[m_iBranchNum];
 		System.arraycopy(m_CanAcessBranch, 0, newTestcase.m_CanAcessBranch, 0, m_iBranchNum);
-		
+		newTestcase.m_Pos = new Integer[m_iBranchNum];
+		System.arraycopy(m_Pos, 0, newTestcase.m_Pos, 0, m_iBranchNum);
 		newTestcase.m_aiParams = new Object[m_iBranchNum][m_iParamNum];
 		for (int i = 0; i < m_iBranchNum; i ++)
 			System.arraycopy(m_aiParams[i], 0, newTestcase.m_aiParams[i], 0, m_iParamNum);
@@ -93,13 +93,18 @@ public class Testcase
 	
 	public void Mutate(CodeAnalyzer codeAnalyzer, int pos)
 	{
+		m_Pos = new Integer[m_iBranchNum];
 		Random r = new Random();
 		int pos1 = 0;
 		if(m_iParamNum - 1 > 0)
 		{
 			pos1 = Math.abs(r.nextInt()%(m_iParamNum-1));
 		}
-		this.m_aiParams[pos][pos1] = r.nextInt()%10;
+		this.m_aiParams[pos][pos1] = (Object)Util.Random(codeAnalyzer, pos1);
+		for (int i = 0; i < m_iBranchNum; i++)
+		{
+			m_Pos[i] = -1;
+		}
 		this.m_CanAcessBranch = codeAnalyzer.check(m_aiParams, m_Pos);
 	}
 	

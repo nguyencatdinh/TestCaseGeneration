@@ -12,6 +12,7 @@ import system.*;
 import transform.AST.*;
 import transform.CodeGeneration.Ast2GraphVisitor;
 import transform.CodeGeneration.Ast2MappingTableVisitor;
+import transform.CodeGeneration.AstPrinterVisitor;
 import transform.CodeGeneration.ControlFlowGraphVisitor;
 import transform.CodeGeneration.PrettyOutputVisitor;
 import transform.CodeGeneration.ConditionScanVisitor;
@@ -90,9 +91,9 @@ public class Transform
                             new FileReader(new File(this.standardSourceFile)))))));
             this.astree = parser.parse();
            
-            // Print the AST structure to text file
+            //Print the AST structure to text file
         	//Visitor walkerPrint = new AstPrinterVisitor(this.standardSourceFile);
-        	//astree.visit(walkerPrint, null);
+            //astree.visit(walkerPrint, null);
         	//System.out.println(this.standardSourceFile + ": AST internal structure");
         		
            /**
