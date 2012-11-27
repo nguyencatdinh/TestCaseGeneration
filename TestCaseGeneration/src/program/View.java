@@ -89,7 +89,7 @@ public class View {
 		shell.setText("Test Case Generation");
 		txtLog = new StyledText(shell, SWT.BORDER|SWT.H_SCROLL|SWT.V_SCROLL);
 		txtLog.setEditable(false);
-		txtLog.setBounds(615, 646, 743, 307);
+		txtLog.setBounds(688, 646, 670, 307);
 		font = new Font(Display.getCurrent(), "Courier New", 12, SWT.NONE);
         txtLog.setFont(font);
         
@@ -120,16 +120,16 @@ public class View {
 		
 		table2 = new Table(shell, SWT.MULTI | SWT.BORDER | SWT.FULL_SELECTION);
 		table2.setFont(font);
-		table2.setBounds(269, 646, 322, 307);
+		table2.setBounds(269, 646, 399, 307);
 		table2.setHeaderVisible(true);
 		table2.setLinesVisible(true);
 		
 		columnCondition = new TableColumn(table2, SWT.RIGHT);
-		columnCondition.setWidth(163);
+		columnCondition.setWidth(219);
 		columnCondition.setText("Conditions");
 		
 		columnTrue = new TableColumn(table2, SWT.LEFT);
-		columnTrue.setWidth(80);
+		columnTrue.setWidth(90);
 		columnTrue.setText("True");
 		
 		columnFalse = new TableColumn(table2, SWT.LEFT);
@@ -305,7 +305,7 @@ public class View {
 		
 		lblLogs = new Label(shell, SWT.NONE);
 		lblLogs.setText("Logs");
-		lblLogs.setBounds(615, 614, 87, 26);
+		lblLogs.setBounds(688, 617, 87, 26);
 		
 		btnViewDetail = new Button(shell, SWT.NONE);
 		btnViewDetail.addSelectionListener(new SelectionAdapter() {

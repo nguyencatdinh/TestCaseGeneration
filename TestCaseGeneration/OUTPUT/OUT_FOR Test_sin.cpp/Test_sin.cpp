@@ -1,132 +1,18 @@
-Program(
-	FuncDecl(
-		classify
-		ParaList(
-			Para(
-				x
-				TypeList(
-					Float
-					EmptyTypeList()
-				)
-			)
-			EmptyParaList()
-		)
-		TypeList(
-			Int
-			EmptyTypeList()
-		)
-		CompStmt(
-			StmtList(
-				IfThenElseStmt(
-					BinExpr(
-						BinExpr(
-							VarExpr(
-								x
-							)
-							<
-							IntLiteral(
-								0
-							)
-						)
-						||
-						BinExpr(
-							VarExpr(
-								x
-							)
-							>
-							FloatLiteral(
-								4.28
-							)
-						)
-					)
-					RetStmt(
-						UnaryExpr(
-							-
-							IntLiteral(
-								1
-							)
-						)
-					)
-					CompStmt(
-						StmtList(
-							IfThenElseStmt(
-								BinExpr(
-									CallExpr(
-										sin
-										ExprList(
-											VarExpr(
-												x
-											)
-											EmptyExprList()
-										)
-									)
-									>
-									IntLiteral(
-										0
-									)
-								)
-								IfThenElseStmt(
-									BinExpr(
-										CallExpr(
-											cos
-											ExprList(
-												VarExpr(
-													x
-												)
-												EmptyExprList()
-											)
-										)
-										>
-										IntLiteral(
-											0
-										)
-									)
-									RetStmt(
-										IntLiteral(
-											1
-										)
-									)
-									RetStmt(
-										IntLiteral(
-											2
-										)
-									)
-								)
-								IfThenElseStmt(
-									BinExpr(
-										CallExpr(
-											cos
-											ExprList(
-												VarExpr(
-													x
-												)
-												EmptyExprList()
-											)
-										)
-										<
-										IntLiteral(
-											0
-										)
-									)
-									RetStmt(
-										IntLiteral(
-											3
-										)
-									)
-									RetStmt(
-										IntLiteral(
-											4
-										)
-									)
-								)
-							)
-							EmptyStmtList()
-						)
-					)
-				)
-				EmptyStmtList()
-			)
-		)
-	)
-	EmptyDeclarationList()
-)
+int classify(float x)
+{
+	if (((x < 0) || (x > 4.28)))
+		return -1;
+	else
+	{
+		if ((sin(x) > 0))
+			if ((cos(x) > 0))
+				return 1;
+			else
+				return 2;
+		else
+			if ((cos(x) < 0))
+				return 3;
+			else
+				return 4;
+	}
+}
