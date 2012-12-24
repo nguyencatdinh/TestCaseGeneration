@@ -12,7 +12,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
 import transform.AST.CompilationException;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class View {
 	
